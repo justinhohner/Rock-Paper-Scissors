@@ -53,16 +53,17 @@ return 0;
 
 void RandomThrow()
 {
+	srand(time(0));
 	CompThrow = rand() % (3); //Using random number to simulate a "throw," or play
-	  	switch(CompThrow)
-		{
-			case 0: cout << "Rock"  << endl;
-				break;
-			case 1: cout << "Paper" << endl;
-				break;
-			case 2: cout << "Scissors" << endl;
-				break;
-		}
+	switch(CompThrow)
+	{
+		case 0: cout << "Rock"  << endl;
+			break;
+		case 1: cout << "Paper" << endl;
+			break;
+		case 2: cout << "Scissors" << endl;
+			break;
+	}
 	PastThrows();
 	RoundCount++;
 	cout << "Would you like to play again? y/n ";
