@@ -147,7 +147,7 @@ void Comparison()
 			RecentThrows[1] = RecentThrows[2];
 			RecentThrows[2] = CompThrow;
 		}
-	for (int val : Results)  //Beginning of Range-based loop
+        for (uint val = 0; val != Results.size(); val++)
 	{
 		if (RecentThrows[0] == Results[Loop])
 		{
