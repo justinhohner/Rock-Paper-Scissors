@@ -1,8 +1,8 @@
-all: RPSComp2.c
-	g++ -Wall RPSComp2.c -o rps
+all: Rps.cpp
+	g++ -Wall Rps.cpp -o rps
 
 check: 
-	cpplint RPSComp2.c
+	cpplint Rps.cpp
 
 clean:
 	rm -f rps
