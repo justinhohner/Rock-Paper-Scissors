@@ -5,22 +5,21 @@
 using namespace std;
 // RockPaperScissors.c: my first i/o C++ program, with do/while loop and switches; saving results to file.
 
-vector<int> Results;
-short Loop, Check, RoundCount = 0;
-int RecentThrows [2], CompThrow;
-char UserInput4;
 
-void PastThrows();
-void Comparison();
-void ComparisonThrow();
-void RandomThrow();
+int RecentThrows [2];
+vector<int> Results;
+
+int PastThrows(int);
+int Comparison(int);
+int ComparisonThrow(int, int);
+int RandomThrow(int);
 
 
 //Initiates game and plays first round and any round where a prediction is not available.
 int main() 
 {
-	short ArrayPrint;
-	char UserInput1; //User responses for initiating and replaying games
+short ArrayPrint, RoundCount = 0;
+char UserInput1, UserInput4; //User responses for initiating and replaying games
 	cout << "Would you like to play Rock, Paper, Scissors? y/n ";
 	cin >> UserInput1;
 	if (UserInput1 =='y')
@@ -29,11 +28,11 @@ int main()
 		{ 	
 			if (RoundCount <5)
 			{
-				RandomThrow();
+				UserInput4 = RandomThrow(RoundCount);
 			}			
 			if (RoundCount >= 5 && UserInput4 == 'y')
 			{
-				Comparison();
+				UserInput4 = Comparison(RoundCount);
 			}
 		} while (UserInput4 == 'y');	
 	}
@@ -51,8 +50,9 @@ return 0;
 
 //Random Throw function determines any throw that where a match is not found in the STL array for the last 3 player moves.
 
-void RandomThrow()
+void RandomThrow(int &RoundCount)
 {
+int CompThrow;
 	srand(time(0));
 	CompThrow = rand() % (3); //Using random number to simulate a "throw," or play
 	switch(CompThrow)
@@ -64,16 +64,17 @@ void RandomThrow()
 		case 2: cout << "Scissors" << endl;
 			break;
 	}
-	PastThrows();
+	PastThrows(CompThrow);
 	RoundCount++;
 	cout << "Would you like to play again? y/n ";
  	cin >> UserInput4;
+	Return UserInput4;
 }
 
 
 //PastThrows function determines the User throw and stores it to STLArray.
 
-void PastThrows()
+int PastThrows(int CompThrow)
 {
 char UserInput2, UserInput3;
 	cout << "Did I win? y/n ";
@@ -131,10 +132,10 @@ char UserInput2, UserInput3;
 }
 
 //Runs the comparison.
-void Comparison()
+int Comparison(int RoundCount)
 {
-	Loop = 5;
-	Check = 5;
+int Loop = 5;
+char UserInput4;
 	if (RoundCount == 5)	
 		{
 			RecentThrows[0] = Results[3];
@@ -155,23 +156,24 @@ void Comparison()
 			{
 				if (RecentThrows[2] == Results[Loop + 2])
 				{
-					ComparisonThrow();
-					return;	
+					UserInput4 = ComparisonThrow(Loop, RoundCount);
+					return UserInput4;	
 				}
 			}
 		}
 		Loop++;
-		Check++;
 	}
-	RandomThrow();
+	UserInput4 = RandomThrow(RoundCount);
+	Return UserInput4;
 }
 
 //Checks to make sure the match isn't just the last three throws repeated and determines next throw when a true matching pattern has been found.
 
-void ComparisonThrow()
+int ComparisonThrow(int Loop, int RoundCount)
 {
-	short DetThrow;
-	if (Check != RoundCount)
+short DetThrow;
+char UserInput4;
+	if (Loop != RoundCount)
 	{
 		DetThrow = Results[Loop + 3];		
 		switch(DetThrow)
@@ -186,13 +188,14 @@ void ComparisonThrow()
 				CompThrow = 3;
 				break;
 		}
-		PastThrows();
+		PastThrows(CompThrow);
 		cout << "Would you like to play again? y/n ";
  	 	cin >> UserInput4;
 	}
 	else
 	{
-		RandomThrow();
+		UserInput4 = RandomThrow(RoundCount);
 	}
+	Return UserInput4;
 }
 	
